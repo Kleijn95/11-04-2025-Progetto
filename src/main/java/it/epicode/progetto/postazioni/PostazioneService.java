@@ -31,7 +31,7 @@ public class PostazioneService {
 
             List<Edificio> edifici = edificioRepository.findAll();
             if (edifici != null && !edifici.isEmpty()) {
-                int index = faker.random().nextInt(0, edifici.size());
+                int index = faker.random().nextInt(0, edifici.size() - 1);
                 if (index < edifici.size()) {
                     Edificio edificio = edifici.get(index);
                     postazione.setEdificio(edificio);

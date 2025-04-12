@@ -34,5 +34,12 @@ public class Postazione {
     @OneToMany(mappedBy = "postazione", cascade = CascadeType.ALL)
     private List<Prenotazione> prenotazioni;
 
+    @Override
+    public String toString() {
+        return "Postazione{" +
+                "id=" + id +
+                ", edificio=" + (edificio != null ? edificio.getCitta() : "N/A") +
+                '}';
+    }
 
 }

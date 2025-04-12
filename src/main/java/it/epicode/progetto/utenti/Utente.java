@@ -26,6 +26,19 @@ public class Utente {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "utente")
     private List<Prenotazione> prenotazioni;
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nomeCompleto='" + nomeCompleto + '\'' +
+                ", email='" + email + '\'' +
+                ", numeroPrenotazioni=" + (prenotazioni != null ? prenotazioni.size() : 0) +
+                '}';
+    }
+
+
 }

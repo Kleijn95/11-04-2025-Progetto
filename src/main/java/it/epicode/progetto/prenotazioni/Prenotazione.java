@@ -32,4 +32,18 @@ public class Prenotazione {
     private Utente utente;
     @ManyToOne
     private Postazione postazione;
+
+    @Override
+
+    public String toString() {
+        return "Prenotazione{" +
+                "id=" + id +
+                ", data=" + data +
+                ", oraInizio=" + oraInizio +
+                ", oraFine=" + oraFine +
+                ", postazione=" + (postazione != null ? "Id postazione= " + postazione.getId() + " - " + "Citta " + postazione.getEdificio().getCitta() : "N/A") +
+                '}';
+    }
+
+
 }

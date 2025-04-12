@@ -15,6 +15,8 @@ public interface PostazioneRepository extends JpaRepository<Postazione, Long> {
     @Query("SELECT p FROM Postazione p JOIN p.edificio e WHERE p.tipo = :tipo AND e.citta = :citta")
     List<Postazione> findByTipoAndCitta(@Param("tipo") TipoPostazione tipo, @Param("citta") String citta);
 
+    List <Postazione> findByTipo(TipoPostazione tipo);
 
+    List <Postazione> findByEdificioCitta(String citta);
 
 }

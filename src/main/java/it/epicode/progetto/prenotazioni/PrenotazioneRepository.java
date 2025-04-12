@@ -31,4 +31,8 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Long
             @Param("oraFineStart") LocalTime oraFineStart,
             @Param("oraFineEnd") LocalTime oraFineEnd
     );
+
+    List<Prenotazione> findByUtenteId(Long utenteId);
+
+
 }

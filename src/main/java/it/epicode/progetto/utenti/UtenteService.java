@@ -2,6 +2,7 @@ package it.epicode.progetto.utenti;
 
 
 import com.github.javafaker.Faker;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,29 @@ public class UtenteService {
     @Autowired
     private Faker faker;
 
+
+
     public void creaUtenti(int count) {
-        for (int i = 0; i < count; i++) {
-            Utente utente = new Utente();
-            utente.setUsername(faker.name().username());
-            utente.setNomeCompleto(faker.name().fullName());
-            utente.setEmail(faker.internet().emailAddress());
-            utenteRepository.save(utente);
+        int created = 0;
+
+        while (created < count) {
+            String username = faker.name().username();
+            String email = faker.internet().emailAddress();
+
+            boolean usernameExists = utenteRepository.existsByUsername(username);
+            boolean emailExists = utenteRepository.existsByEmail(email);
+
+            if (!usernameExists && !emailExists) {
+                Utente utente = new Utente();
+                utente.setUsername(username);
+                utente.setNomeCompleto(faker.name().fullName());
+                utente.setEmail(email);
+                utenteRepository.save(utente);
+                created++;
+            }
         }
     }
+
 
     public List<Utente> trovaUtentiConMenoDiDuePrenotazioni() {
         List<Utente> utenti = utenteRepository.findUtentiConMenoDiDuePrenotazioni();
@@ -41,9 +56,12 @@ public class UtenteService {
         return utenteRepository.findByUsername(username);
     }
 
-
+    public Utente getUtenteConPrenotazioni(Long id) {
+        return utenteRepository.findByIdWithPrenotazioni(id)
+                .orElseThrow(() -> new EntityNotFoundException("Utente non trovato"));}
 
     public boolean utenteEsiste(String username) {
         return utenteRepository.existsByUsername(username);
     }
 }
+
